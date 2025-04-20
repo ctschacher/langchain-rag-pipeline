@@ -1,0 +1,8 @@
+langchain
+llama-cpp-python
+chromadb
+sentence-transformers
+pypdf
+requests
+tqdm
+python-dotenv
