@@ -5,11 +5,15 @@ The Python script implements a Retrieval-Augmented Generation (RAG) pipeline usi
 ## Features
 
 *   **Retrieval-Augmented Generation:** Answers questions based on provided documents.
-*   **Local LLM:** Uses a locally downloaded Llama 2 model (GGUF format).
+*   **Local LLM:** Uses a locally downloaded Llama 2 model.
 *   **Document Support:** Ingests PDF and TXT files from a specified directory. **Note:** PDF support requires the text to be selectable (no OCR capabilities).
 *   **Vector Store:** Uses ChromaDB to store and retrieve document embeddings.
 *   **Configurable:** Settings managed via a `.env` file.
 *   **Automatic Model Download:** Downloads the specified model if it's not found locally.
+
+## Motivation
+
+This script was created to explore and experiment with Retrieval-Augmented Generation (RAG) pipelines using readily available open-source components. The goal was to build a simple, self-contained RAG system that runs entirely locally, leveraging the power of large language models (LLMs) like Llama 2 without relying on external APIs or cloud services. It serves as a practical example for understanding how to connect document loading, vector storage, and LLM inference for question-answering tasks based on custom knowledge sources.
 
 ## Setup
 

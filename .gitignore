@@ -1,0 +1,30 @@
+# Vector database
+chroma_db/
+
+# Source documents
+docs/
+
+# Downloaded LLM models
+models/
+
+# Python virtual environment
+rag_env/
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS specific files
+.DS_Store
+Thumbs.db
