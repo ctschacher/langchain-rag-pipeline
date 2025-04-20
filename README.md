@@ -1,6 +1,6 @@
-# RAG Pipeline Script
+# RAG Pipeline
 
-This script implements a Retrieval-Augmented Generation (RAG) pipeline using LangChain, Llama.cpp (via `llama-cpp-python`), and ChromaDB. It loads configuration from a `.env` file, supports PDF and TXT documents for context retrieval, and provides a command-line interface (CLI) for user interaction.
+The Python script implements a Retrieval-Augmented Generation (RAG) pipeline using LangChain, Llama.cpp (via `llama-cpp-python`), and ChromaDB. It loads configuration from a `.env` file, supports PDF and TXT documents for context retrieval, and provides a command-line interface (CLI) for user interaction.
 
 ## Features
 
@@ -33,12 +33,8 @@ This script implements a Retrieval-Augmented Generation (RAG) pipeline using Lan
 
 ## Configuration
 
-Copy the provided `.env.example` file to `.env` and configure the necessary environment variables:
+Use the provided `.env` file to configure the necessary environment variables:
 
-```bash
-cp .env.example .env
-# Now edit .env with your specific settings
-```
 
 Key variables include:
 
@@ -77,6 +73,23 @@ Key variables include:
 4.  **Ask questions:** Type your question at the prompt and press Enter. The script will provide an answer based on the LLM and retrieved context (if documents were loaded).
 
 5.  **Exit:** Press `Ctrl+C` to exit the script.
+
+## Workflow Diagram
+
+```mermaid
+graph TD
+    A[Start] --> C[Load Config];
+    C --> D[Load Documents];
+    D --> E[Build/Load Vector Store];
+    E --> F[Initialize LLM];
+    F --> G[Display CLI];
+    G --> H[Get User Question];
+    H --> I[Retrieve Docs from ChromaDB];
+    I -- LLM + Context --> J[Generate Answer];
+    J --> K[Display Answer];
+    K --> G;
+    G -- Ctrl+C --> L[Exit];
+```
 
 ## Directory Structure
 
