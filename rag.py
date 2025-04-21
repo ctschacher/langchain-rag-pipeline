@@ -40,6 +40,7 @@ DOCS_DIRECTORY = os.getenv("DOCS_DIRECTORY", "./docs")
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", 1000))
 CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", 200))
 SEARCH_K = int(os.getenv("SEARCH_K", 3))
+LLM_N_BATCH = int(os.getenv("LLM_N_BATCH", 512))
 
 
 def download_model(model_path, model_url):
@@ -104,12 +105,18 @@ def build_llm():
     if not os.path.exists(MODEL_PATH):
         logging.error(f"Model file not found at {MODEL_PATH}. Please ensure it is downloaded.")
         sys.exit(1)
+    
+    n_gpu_layers = os.getenv("LLM_N_GPU_LAYERS", "0")
+
     return LlamaCpp(
         model_path=MODEL_PATH,
         temperature=LLM_TEMPERATURE,
         max_tokens=LLM_MAX_TOKENS,
         n_ctx=LLM_N_CTX,
-        verbose=LLM_VERBOSE
+        n_gpu_layers=int(n_gpu_layers), 
+        n_batch=LLM_N_BATCH,
+        verbose=LLM_VERBOSE,
+        f16_kv=True
     )
 
 
