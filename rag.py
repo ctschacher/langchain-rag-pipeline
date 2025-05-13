@@ -92,6 +92,30 @@ def load_documents(docs_dir):
 def build_vectorstore(chunks):
     """Build or load the Chroma vectorstore from document chunks."""
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    
+    # Check if a persisted vector store exists
+    # A simple check for the existence of the persist directory and a known ChromaDB file
+    db_file_path = os.path.join(PERSIST_DIRECTORY, "chroma.sqlite3")
+
+    if os.path.exists(PERSIST_DIRECTORY) and os.path.exists(db_file_path):
+        logging.info(f"Loading existing vectorstore from {PERSIST_DIRECTORY}")
+        try:
+            vectorstore = Chroma(
+                persist_directory=PERSIST_DIRECTORY,
+                embedding_function=embeddings
+            )
+            # Optionally, verify the vectorstore has content if needed, e.g. vectorstore._collection.count()
+            # For now, we assume if it loads, it's usable.
+            return vectorstore
+        except Exception as e:
+            logging.warning(f"Failed to load existing vectorstore: {e}. Building a new one.")
+            # Fall through to building a new one if loading fails
+
+    logging.info(f"Building new vectorstore and persisting to {PERSIST_DIRECTORY}")
+    if not chunks:
+        logging.warning("No document chunks provided to build_vectorstore. Returning None.")
+        return None
+        
     return Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
